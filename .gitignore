@@ -1,0 +1,10 @@
+# Ignore job application data
+job_applications.csv
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore virtual environments
+.venv/
+venv/
