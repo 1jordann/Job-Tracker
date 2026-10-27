@@ -14,7 +14,11 @@ def initialize_file():
 
 # Function to add a new job application
 def add_application():
-    company = input("Enter company name: ")
+    company = input("Enter company name: ").strip()
+
+    if company == "":
+        print("Please enter a company name. It cannot be empty. ")
+        return
     date_applied = datetime.today().strftime('%Y-%m-%d')
     status = "Pending"
     
@@ -42,8 +46,12 @@ def view_applications():
 
 # Function to update application status
 def update_status():
-    company_name = input("Enter company name to update status: ")
-    new_status = input("Enter new status (Accepted/Denied/Pending): ").capitalize()
+    company_name = input("Enter company name to update status: ").strip()
+    new_status = input("Enter new status (Accepted/Denied/Pending): ").strip().capitalize()
+
+    if new_status not in ["Accepted", "Denied", "Pending"]:
+        print("Invalid status. Please enter Accepted, Denied, or Pending.")
+        return
     
     updated = False
     rows = []
@@ -51,7 +59,7 @@ def update_status():
     with open(FILENAME, "r") as file:
         reader = csv.reader(file)
         for row in reader:
-            if row and row[0].lower() == company_name.lower():
+            if row and row[0].strip().lower() == company_name.lower():
                 row[2] = new_status
                 updated = True
             rows.append(row)
@@ -67,14 +75,14 @@ def update_status():
 
 # Function to delete an application
 def delete_application():
-    company_name = input("Enter company name to delete: ")
+    company_name = input("Enter company name to delete: ").strip()
     rows = []
     deleted = False
     
     with open(FILENAME, "r") as file:
         reader = csv.reader(file)
         for row in reader:
-            if row and row[0].lower() == company_name.lower():
+            if row and row[0].strip().lower() == company_name.lower():
                 deleted = True
             else:
                 rows.append(row)
